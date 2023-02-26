@@ -1,6 +1,7 @@
 import time
 
 from consts import Tanks, Ranged, Mages, Warriors, Assasins, Supports, Musicians, Brothers
+from utils import get_input
 
 
 def intro():
@@ -19,7 +20,7 @@ def intro():
         print("Aby zobaczyć podpowiedzi wpisz '1'.")
         print("Aby zobaczyć listę bohaterów wpisz '2'.")
         print("Aby rozpocząć grę wpisz 'start'.")
-        q = input("Co chcesz zrobić?: ")
+        q = get_input(text="Co chcesz zrobić?: ")
         if q == "1":
             print()
             print("                                              Kupowanie Postaci:")

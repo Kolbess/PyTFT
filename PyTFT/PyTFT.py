@@ -12,6 +12,7 @@ from fight import find_objects_on_arena, find_tiers_on_arena, count_victory_poin
 from intro import intro
 from levels import get_level
 from points import get_points_for_tiers
+from utils import get_input
 
 hp = 100
 gold = 5
@@ -40,7 +41,7 @@ def rundalvl1(money, reserve):
         print(*shop, sep=" | ", end=" |"'\n')
         print("Złoto: ", money)
         print()
-        buy = input("Podaj numery postaci, które chcesz kupić: ").split()
+        buy = get_input(text="Podaj numery postaci, które chcesz kupić: ").split()
         for i in buy:
             i = int(i)
             if shop[i] == "–":
@@ -60,12 +61,12 @@ def rundalvl1(money, reserve):
         print()
         print("Twoja ławka: ", *reserve, sep=" | ", end=" |"'\n')
         print()
-        q = str(input("Przejść Dalej? T/N: "))
+        q = str(get_input(text="Przejść Dalej? T/N: "))
     q = ""
     n = 0
     while q != "T":
         champ_on_arena = [int(champ_on_arena) for champ_on_arena in
-                          input("Podaj numer postaci, które chcesz wstawić na arenę: ").split()]
+                          get_input(text="Podaj numer postaci, które chcesz wstawić na arenę: ").split()]
         if champ_on_arena[0] != 0:
             if champ_on_arena[0] != 10:
                 for i in champ_on_arena:
@@ -94,14 +95,14 @@ def rundalvl1(money, reserve):
         print()
         print("Twoja ławka: ", *reserve, sep=" | ", end=" |"'\n')
         print()
-        sell = [int(sell) for sell in input("Podaj numery postaci, które chcesz sprzedać: ").split()]
+        sell = [int(sell) for sell in get_input(text="Podaj numery postaci, które chcesz sprzedać: ").split()]
         for i in sell:
             if i != 0:
                 if bench[i] == "–":
                     print("Sprzedaż nieudana to miejsce jest puste!")
                 else:
                     money += int(shop[i][-1])
-        q = str(input("Przejść Dalej? T/N: "))
+        q = str(get_input(text="Przejść Dalej? T/N: "))
         if q != "N" and q != "T":
             print("Niewłaściwy argument!!!")
         if q == "N":
@@ -119,7 +120,7 @@ def get_round(money, reserve):
         print(*shop, sep=" | ", end=" |"'\n')
         print("Złoto: ", money)
         print()
-        buy = [int(buy) for buy in input("Podaj numery postaci, które chcesz kupić: ").split()]
+        buy = [int(buy) for buy in get_input(text="Podaj numery postaci, które chcesz kupić: ").split()]
         for i in buy:
             if i != 0:
                 if shop[i] == "–":
@@ -139,7 +140,7 @@ def get_round(money, reserve):
         print()
         print("Twoja ławka: ", *bench, sep=" | ", end=" |"'\n')
         print()
-        q = str(input("Przejść Dalej? T/N: "))
+        q = str(get_input(text="Przejść Dalej? T/N: "))
     q = ""
     try:
         n = arena.index("–")
@@ -147,7 +148,7 @@ def get_round(money, reserve):
         n = -1
     while q != "T":
         champ_on_arena = [int(champ_on_arena) for champ_on_arena in
-                          input("Podaj numer postaci, które chcesz wstawić na arenę: ").split()]
+                          get_input(text="Podaj numer postaci, które chcesz wstawić na arenę: ").split()]
         if champ_on_arena[0] != 0:
             if champ_on_arena[0] != 10:
                 for i in champ_on_arena:
@@ -174,7 +175,7 @@ def get_round(money, reserve):
         print()
         print("Twoja ławka: ", *reserve, sep=" | ", end=" |"'\n')
         print()
-        sell = [int(sell) for sell in input("Podaj numery postaci, które chcesz sprzedać: ").split()]
+        sell = [int(sell) for sell in get_input(text="Podaj numery postaci, które chcesz sprzedać: ").split()]
         for i in sell:
             if i != 0:
                 if reserve[i - 1] == "–":
@@ -182,7 +183,7 @@ def get_round(money, reserve):
                 else:
                     money += int(reserve[i - 1][-1])
                     reserve[i - 1] = "–"
-        q = str(input("Przejść Dalej? T/N: "))
+        q = str(get_input(text="Przejść Dalej? T/N: "))
         if q != "N" and q != "T":
             print("Niewłaściwy argument!!!")
         if q == "N":
@@ -367,57 +368,57 @@ def upgrade(b):
 data = get_points_for_tiers()
 
 
-def fight(health, win, loss, money):
+def fight(health, win, loss, money, a, ea):
     avp = 0
     eavp = 0
 
-    atanks = find_objects_on_arena(arena=arena, objects=Tanks)
-    aranged = find_objects_on_arena(arena=arena, objects=Ranged)
-    amages = find_objects_on_arena(arena=arena, objects=Mages)
-    awarriors = find_objects_on_arena(arena=arena, objects=Warriors)
-    asupports = find_objects_on_arena(arena=arena, objects=Supports)
-    aassasins = find_objects_on_arena(arena=arena, objects=Assasins)
-    amusicians = find_objects_on_arena(arena=arena, objects=Musicians)
-    abrothers = find_objects_on_arena(arena=arena, objects=Brothers)
-    a1tier = find_tiers_on_arena(arena=arena, objects=tier1champs)
-    a1tier2 = find_tiers_on_arena(arena=arena, objects=u2tier1champs)
-    a1tier3 = find_tiers_on_arena(arena=arena, objects=u3tier1champs)
-    a2tier = find_tiers_on_arena(arena=arena, objects=tier2champs)
-    a2tier2 = find_tiers_on_arena(arena=arena, objects=u2tier2champs)
-    a2tier3 = find_tiers_on_arena(arena=arena, objects=u3tier2champs)
-    a3tier = find_tiers_on_arena(arena=arena, objects=tier3champs)
-    a3tier2 = find_tiers_on_arena(arena=arena, objects=u2tier3champs)
-    a3tier3 = find_tiers_on_arena(arena=arena, objects=u3tier3champs)
-    a4tier = find_tiers_on_arena(arena=arena, objects=tier4champs)
-    a4tier2 = find_tiers_on_arena(arena=arena, objects=u2tier4champs)
-    a4tier3 = find_tiers_on_arena(arena=arena, objects=u3tier4champs)
-    a5tier = find_tiers_on_arena(arena=arena, objects=tier5champs)
-    a5tier2 = find_tiers_on_arena(arena=arena, objects=u2tier5champs)
-    a5tier3 = find_tiers_on_arena(arena=arena, objects=u3tier5champs)
+    atanks = find_objects_on_arena(arena=a, objects=Tanks)
+    aranged = find_objects_on_arena(arena=a, objects=Ranged)
+    amages = find_objects_on_arena(arena=a, objects=Mages)
+    awarriors = find_objects_on_arena(arena=a, objects=Warriors)
+    asupports = find_objects_on_arena(arena=a, objects=Supports)
+    aassasins = find_objects_on_arena(arena=a, objects=Assasins)
+    amusicians = find_objects_on_arena(arena=a, objects=Musicians)
+    abrothers = find_objects_on_arena(arena=a, objects=Brothers)
+    a1tier = find_tiers_on_arena(arena=a, objects=tier1champs)
+    a1tier2 = find_tiers_on_arena(arena=a, objects=u2tier1champs)
+    a1tier3 = find_tiers_on_arena(arena=a, objects=u3tier1champs)
+    a2tier = find_tiers_on_arena(arena=a, objects=tier2champs)
+    a2tier2 = find_tiers_on_arena(arena=a, objects=u2tier2champs)
+    a2tier3 = find_tiers_on_arena(arena=a, objects=u3tier2champs)
+    a3tier = find_tiers_on_arena(arena=a, objects=tier3champs)
+    a3tier2 = find_tiers_on_arena(arena=a, objects=u2tier3champs)
+    a3tier3 = find_tiers_on_arena(arena=a, objects=u3tier3champs)
+    a4tier = find_tiers_on_arena(arena=a, objects=tier4champs)
+    a4tier2 = find_tiers_on_arena(arena=a, objects=u2tier4champs)
+    a4tier3 = find_tiers_on_arena(arena=a, objects=u3tier4champs)
+    a5tier = find_tiers_on_arena(arena=a, objects=tier5champs)
+    a5tier2 = find_tiers_on_arena(arena=a, objects=u2tier5champs)
+    a5tier3 = find_tiers_on_arena(arena=a, objects=u3tier5champs)
 
-    eatanks = find_objects_on_arena(arena=enemyarena, objects=Tanks)
-    earanged = find_objects_on_arena(arena=enemyarena, objects=Ranged)
-    eamages = find_objects_on_arena(arena=enemyarena, objects=Mages)
-    eawarriors = find_objects_on_arena(arena=enemyarena, objects=Warriors)
-    easupports = find_objects_on_arena(arena=enemyarena, objects=Supports)
-    eaassasins = find_objects_on_arena(arena=enemyarena, objects=Assasins)
-    eamusicians = find_objects_on_arena(arena=enemyarena, objects=Musicians)
-    eabrothers = find_objects_on_arena(arena=enemyarena, objects=Brothers)
-    ea1tier = find_tiers_on_arena(arena=enemyarena, objects=tier1champs)
-    ea1tier2 = find_tiers_on_arena(arena=enemyarena, objects=u2tier1champs)
-    ea1tier3 = find_tiers_on_arena(arena=enemyarena, objects=u3tier1champs)
-    ea2tier = find_tiers_on_arena(arena=enemyarena, objects=tier2champs)
-    ea2tier2 = find_tiers_on_arena(arena=enemyarena, objects=u2tier2champs)
-    ea2tier3 = find_tiers_on_arena(arena=enemyarena, objects=u3tier2champs)
-    ea3tier = find_tiers_on_arena(arena=enemyarena, objects=tier3champs)
-    ea3tier2 = find_tiers_on_arena(arena=enemyarena, objects=u2tier3champs)
-    ea3tier3 = find_tiers_on_arena(arena=enemyarena, objects=u3tier3champs)
-    ea4tier = find_tiers_on_arena(arena=enemyarena, objects=tier4champs)
-    ea4tier2 = find_tiers_on_arena(arena=enemyarena, objects=u2tier4champs)
-    ea4tier3 = find_tiers_on_arena(arena=enemyarena, objects=u3tier4champs)
-    ea5tier = find_tiers_on_arena(arena=enemyarena, objects=tier5champs)
-    ea5tier2 = find_tiers_on_arena(arena=enemyarena, objects=u2tier5champs)
-    ea5tier3 = find_tiers_on_arena(arena=enemyarena, objects=u3tier5champs)
+    eatanks = find_objects_on_arena(arena=ea, objects=Tanks)
+    earanged = find_objects_on_arena(arena=ea, objects=Ranged)
+    eamages = find_objects_on_arena(arena=ea, objects=Mages)
+    eawarriors = find_objects_on_arena(arena=ea, objects=Warriors)
+    easupports = find_objects_on_arena(arena=ea, objects=Supports)
+    eaassasins = find_objects_on_arena(arena=ea, objects=Assasins)
+    eamusicians = find_objects_on_arena(arena=ea, objects=Musicians)
+    eabrothers = find_objects_on_arena(arena=ea, objects=Brothers)
+    ea1tier = find_tiers_on_arena(arena=ea, objects=tier1champs)
+    ea1tier2 = find_tiers_on_arena(arena=ea, objects=u2tier1champs)
+    ea1tier3 = find_tiers_on_arena(arena=ea, objects=u3tier1champs)
+    ea2tier = find_tiers_on_arena(arena=ea, objects=tier2champs)
+    ea2tier2 = find_tiers_on_arena(arena=ea, objects=u2tier2champs)
+    ea2tier3 = find_tiers_on_arena(arena=ea, objects=u3tier2champs)
+    ea3tier = find_tiers_on_arena(arena=ea, objects=tier3champs)
+    ea3tier2 = find_tiers_on_arena(arena=ea, objects=u2tier3champs)
+    ea3tier3 = find_tiers_on_arena(arena=ea, objects=u3tier3champs)
+    ea4tier = find_tiers_on_arena(arena=ea, objects=tier4champs)
+    ea4tier2 = find_tiers_on_arena(arena=ea, objects=u2tier4champs)
+    ea4tier3 = find_tiers_on_arena(arena=ea, objects=u3tier4champs)
+    ea5tier = find_tiers_on_arena(arena=ea, objects=tier5champs)
+    ea5tier2 = find_tiers_on_arena(arena=ea, objects=u2tier5champs)
+    ea5tier3 = find_tiers_on_arena(arena=ea, objects=u3tier5champs)
 
     avp += count_victory_points(objects=atanks)
     avp += count_victory_points(objects=aranged)
@@ -505,7 +506,7 @@ def fight(health, win, loss, money):
 #             print("Runda: ", runda)
 #             gold, bench, arena = rundalvl1(money=gold, reserve=bench)
 #             enemy()
-#             hp, victory, defeat, gold = fight(health=hp, win=victory, loss=defeat, money=gold)
+#             hp, victory, defeat, gold = fight(health=hp, win=victory, loss=defeat, money=gold, a=arena, ea=enemyarena)
 #             xp += 4
 #             lvl = get_level(experience_points=xp, level=lvl)
 #             runda += 1
@@ -517,7 +518,7 @@ def fight(health, win, loss, money):
 #             print("Runda: ", runda)
 #             gold, bench, arena = get_round(money=gold, reserve=bench)
 #             enemy()
-#             hp, victory, defeat, gold = fight(health=hp, win=victory, loss=defeat, money=gold)
+#             hp, victory, defeat, gold = fight(health=hp, win=victory, loss=defeat, money=gold, a=arena, ea=enemyarena)
 #             xp += 4
 #             lvl = get_level(experience_points=xp, level=lvl)
 #             runda += 1
