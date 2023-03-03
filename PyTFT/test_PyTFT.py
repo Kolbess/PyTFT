@@ -3,7 +3,8 @@ from PyTFT import upgrade, fight
 
 
 @pytest.mark.parametrize("b,bench", [(["Skarner'1 - 1", "Skarner'1 - 1", "Skarner'1 - 1"], ["Skarner'2 - 3", "–", "–"]),
-                                     (["Skarner'2 - 3", "Skarner'2 - 3", "Skarner'2 - 3"], ["Skarner'3 - 9", "–", "–"])]
+                                     (["Skarner'2 - 3", "Skarner'2 - 3", "Skarner'2 - 3"], ["Skarner'3 - 9", "–", "–"]),
+                                     (["Yorick'2 - 12", "Yorick'2 - 12", "Yorick'2 - 12"], ["Yorick'3 - 36", "–", "–"])]
                          )
 def test_upgrade(b, bench):
     test_upg = upgrade(b=b)

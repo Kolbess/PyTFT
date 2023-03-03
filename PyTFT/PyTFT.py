@@ -332,7 +332,7 @@ def upgrade(b):
     for j in range(2):
         upg = 1
         b.sort()
-        for i in range(len(b)):
+        for i in range(len(b) - 1):
             if b[i] == "–":
                 break
             elif b[i] == b[i + 1]:
@@ -345,23 +345,17 @@ def upgrade(b):
                         for at2 in u3tierchamps:
                             if at2[:-6] == t2[:-6]:
                                 t2 = at2
-                                if b[i][-5] == "2":
-                                    b[i - 1] = t2
-                                    b[i] = "–"
-                                    b[i + 1] = "–"
-                                else:
-                                    continue
+                                b[i - 1] = t2
+                                b[i] = "–"
+                                b[i + 1] = "–"
                 for t1 in u1tierchamps:
                     if t1 == b[i]:
                         for at1 in u2tierchamps:
                             if at1[:-6] == t1[:-6]:
                                 t1 = at1
-                                if b[i][-5] == "1":
-                                    b[i - 1] = t1
-                                    b[i] = "–"
-                                    b[i + 1] = "–"
-                                else:
-                                    continue
+                                b[i - 1] = t1
+                                b[i] = "–"
+                                b[i + 1] = "–"
     return b
 
 
